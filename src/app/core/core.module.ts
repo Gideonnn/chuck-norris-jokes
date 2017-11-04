@@ -1,8 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
+// Application wide singletons
+import { JokeService } from './services';
+
 @NgModule({
   providers: [
-
+    JokeService,
   ],
 })
 export class CoreModule {
