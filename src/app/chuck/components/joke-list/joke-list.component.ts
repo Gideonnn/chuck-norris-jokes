@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 // Models
 import { Joke } from '../../../shared/models';
@@ -21,7 +21,8 @@ import { Joke } from '../../../shared/models';
       </mat-card-actions>
 
     </mat-card>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JokeListComponent {
   @Input() jokes: Joke[];
