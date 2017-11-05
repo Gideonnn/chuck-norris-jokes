@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  gid-joke-list,
+  gid-favorite-list {
+    flex: 0 1 auto;
+    margin: 15px;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+
+    gid-joke-list,
+    gid-favorite-list {
+      flex-basis: 500px;
+    }
+  }
+}
