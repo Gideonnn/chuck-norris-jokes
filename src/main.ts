@@ -7,7 +7,7 @@ import { environment } from './environments/environment';
 import { hmrBootstrap } from './hmr';
 
 // Declaration to satisfy ts' --strict compiler flag
-declare var module: { hot: any; }
+declare var module: { hot: any; };
 
 if (environment.production) {
   enableProdMode();
