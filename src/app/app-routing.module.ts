@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+// Components
+import { ChuckComponent } from './chuck/chuck.component';
+
 const routes: Routes = [
-  { path: '', children: [] }
+  { path: '', component: ChuckComponent }
 ];
 
 @NgModule({

@@ -3,7 +3,13 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 // Application wide singletons
 import { JokeService } from './services';
 
+// Eager loaded module
+import { ChuckModule } from '../chuck/chuck.module';
+
 @NgModule({
+  imports: [
+    ChuckModule,
+  ],
   providers: [
     JokeService,
   ],

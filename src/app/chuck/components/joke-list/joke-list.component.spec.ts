@@ -1,0 +1,28 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { JokeListComponent } from './joke-list.component';
+
+import { MaterialModule } from '../../../shared/modules/material.module';
+
+describe('JokeListComponent', () => {
+  let component: JokeListComponent;
+  let fixture: ComponentFixture<JokeListComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [ MaterialModule ],
+      declarations: [ JokeListComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(JokeListComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+  });
+});
