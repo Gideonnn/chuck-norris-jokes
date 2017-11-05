@@ -1,7 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 // Application wide singletons
 import { JokeService } from './services';
+import { ApiService } from './services';
 
 // Eager loaded module
 import { ChuckModule } from '../chuck/chuck.module';
@@ -9,9 +11,11 @@ import { ChuckModule } from '../chuck/chuck.module';
 @NgModule({
   imports: [
     ChuckModule,
+    HttpClientModule,
   ],
   providers: [
     JokeService,
+    ApiService,
   ],
 })
 export class CoreModule {
