@@ -20,7 +20,8 @@ import { JokeService } from '../core/services';
 
       <gid-joke-list
         [jokes]="jokeService.jokes$ | async"
-        (favorite)="handleFavorite($event)">
+        (favorite)="handleFavorite($event)"
+        (refresh)="handleRefresh()">
       </gid-joke-list>
 
       <gid-favorite-list
@@ -57,5 +58,9 @@ export class ChuckComponent implements OnInit {
 
   handleRemoveFavorite(joke: Joke): void {
     this.jokeService.remove(joke);
+  }
+
+  handleRefresh() {
+    this.apiService.refresh();
   }
 }

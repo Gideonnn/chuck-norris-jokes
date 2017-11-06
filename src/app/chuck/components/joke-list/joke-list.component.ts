@@ -13,8 +13,13 @@ export class JokeListComponent {
 
   @Input() jokes: Joke[];
   @Output() favorite = new EventEmitter<Joke>();
+  @Output() refresh = new EventEmitter<void>();
 
   onFavorite(joke: Joke) {
     this.favorite.emit(joke);
+  }
+
+  onRefresh() {
+    this.refresh.emit();
   }
 }

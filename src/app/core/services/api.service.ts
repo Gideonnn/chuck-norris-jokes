@@ -27,12 +27,14 @@ export class ApiService {
 
   readonly jokes$ = new BehaviorSubject<Joke[]>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
+
+  refresh(): void {
     this.http
       .get<ApiResponse>('http://api.icndb.com/jokes/random/10')
       .map(res => res.value)
       .map(apiJokes => apiJokes.map(this.toJoke))
-      .subscribe(this.jokes$);
+      .subscribe(jokes => this.jokes$.next(jokes));
   }
 
   private toJoke(apiJoke: ApiJoke): Joke {
