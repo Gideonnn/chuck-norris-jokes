@@ -19,7 +19,9 @@ describe('JokeService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [JokeService]
+      providers: [
+        { provide: JokeService, useFactory: () => new JokeService([]) },
+      ]
     });
   });
 
@@ -34,13 +36,6 @@ describe('JokeService', () => {
         expect(jokes.length).toBe(1);
       });
       (<any>service)['_jokes$'].next(mockJoke);
-    })));
-
-    it('should update readonly favorites$ when a favorite enters _jokes$', async(inject([JokeService], (service: JokeService) => {
-      service.favorites$.skip(2).subscribe(jokes => {
-        expect(jokes.length).toBe(1);
-      });
-      (<any>service)['jokes$'].next({ ...mockJoke, favorite: true });
     })));
 
   });

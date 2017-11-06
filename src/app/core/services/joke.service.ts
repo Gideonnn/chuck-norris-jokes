@@ -14,7 +14,6 @@ import { JokeAction } from '../../shared/models';
 export class JokeService {
 
   readonly jokes$ = new BehaviorSubject<Joke[]>([]);
-  readonly favorites$ = new BehaviorSubject<Joke[]>([]);
 
   private _jokes$ = new Subject<Joke[]>();
   private _update$ = new Subject<JokeAction>();
@@ -22,27 +21,26 @@ export class JokeService {
   private _remove$ = new Subject<Joke>();
   private _toggle$ = new Subject<Joke>();
 
-  constructor() {
+  constructor(initialState: Joke[]) {
 
     this._jokes$
       .subscribe(this.jokes$);
-
-    this.jokes$
-      .scan(jokes => jokes.filter(joke => joke.favorite), [])
-      .subscribe(this.favorites$);
 
     this._update$
       .scan(this._execute, [])
       .subscribe(this._jokes$);
 
     this._add$
-      .map(joke => this._addAction(joke));
+      .map(joke => this._addAction(joke))
+      .subscribe(this._update$);
 
     this._remove$
-      .map(joke => this._removeAction(joke));
+      .map(joke => this._removeAction(joke))
+      .subscribe(this._update$);
 
     this._toggle$
-      .map(joke => this._toggleAction(joke));
+      .map(joke => this._toggleAction(joke))
+      .subscribe(this._update$);
   }
 
   add(joke: Joke): void {
