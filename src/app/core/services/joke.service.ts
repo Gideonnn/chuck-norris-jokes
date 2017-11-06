@@ -60,7 +60,7 @@ export class JokeService {
   }
 
   private _addAction(joke: Joke): JokeAction {
-    return (state: Joke[]) => [ ...state, joke ];
+    return (state: Joke[]) => state.indexOf(joke) === -1 ? [...state, joke] : state;
   }
 
   private _removeAction(joke: Joke): JokeAction {
