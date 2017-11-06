@@ -1,0 +1,9 @@
+// Material bug: https://github.com/angular/material2/issues/4071
+:host ::ng-deep .mat-list-item-content {
+  height: auto !important;
+}
+
+mat-list-option {
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
