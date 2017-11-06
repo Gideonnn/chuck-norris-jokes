@@ -14,7 +14,7 @@ import { ChuckModule } from '../chuck/chuck.module';
     HttpClientModule,
   ],
   providers: [
-    JokeService,
+    { provide: JokeService, useFactory: () => new JokeService([]) },
     ApiService,
   ],
 })
