@@ -19,7 +19,7 @@ import { JokeService } from '../core/services';
     <div class="container">
 
       <gid-joke-list
-        [jokes]="jokeService.jokes$ | async"
+        [jokes]="jokes$ | async"
         (favorite)="handleFavorite($event)"
         (refresh)="handleRefresh()">
       </gid-joke-list>
@@ -36,6 +36,7 @@ import { JokeService } from '../core/services';
 export class ChuckComponent implements OnInit {
 
   favorites$ = new Subject<Joke[]>();
+  jokes$ = new Subject<Joke[]>();
 
   constructor(
     public apiService: ApiService,
@@ -46,6 +47,10 @@ export class ChuckComponent implements OnInit {
     this.apiService.jokes$
       .mergeMap(jokes => Observable.from(jokes))
       .subscribe(joke => this.jokeService.add(joke));
+
+    this.jokeService.jokes$
+      .map(jokes => jokes.filter(joke => !joke.favorite))
+      .subscribe(this.jokes$);
 
     this.jokeService.jokes$
       .map(jokes => jokes.filter(joke => joke.favorite))
