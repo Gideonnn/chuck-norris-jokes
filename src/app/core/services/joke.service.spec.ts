@@ -20,7 +20,7 @@ describe('JokeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: JokeService, useFactory: () => new JokeService([]) },
+        JokeService,
       ]
     });
   });

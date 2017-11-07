@@ -21,7 +21,7 @@ export class JokeService {
   private _remove$ = new Subject<Joke>();
   private _toggle$ = new Subject<Joke>();
 
-  constructor(initialState: Joke[]) {
+  constructor() {
 
     this._jokes$
       .subscribe(this.jokes$);
