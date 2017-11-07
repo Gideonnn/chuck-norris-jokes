@@ -3,7 +3,7 @@
   <mat-card-title>Jokes</mat-card-title>
 
   <mat-card-content>
-    <mat-list>
+    <mat-list dense>
       <mat-list-item
         *ngFor="let joke of jokes"
         (click)="onFavorite(joke)">
