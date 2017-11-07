@@ -27,7 +27,7 @@ import { StorageService } from '../core/services';
 
       <gid-favorite-list
         [favorites]="favorites$ | async"
-        (remove)="handleRemoveFavorite($event)">
+        (remove)="handleFavorite($event)">
       </gid-favorite-list>
 
     </div>
@@ -75,10 +75,6 @@ export class ChuckComponent implements OnInit {
 
   handleFavorite(joke: Joke) {
     this.jokeService.toggleFavorite(joke);
-  }
-
-  handleRemoveFavorite(joke: Joke): void {
-    this.jokeService.remove(joke);
   }
 
   handleRefresh() {
