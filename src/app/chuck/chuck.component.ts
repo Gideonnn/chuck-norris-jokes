@@ -12,6 +12,7 @@ import { Joke } from '../shared/models';
 // Services
 import { ApiService } from '../core/services';
 import { JokeService } from '../core/services';
+import { StorageService } from '../core/services';
 
 @Component({
   selector: 'gid-chuck',
@@ -41,6 +42,7 @@ export class ChuckComponent implements OnInit {
   constructor(
     public apiService: ApiService,
     public jokeService: JokeService,
+    private storageService: StorageService,
   ) { }
 
   ngOnInit() {
@@ -55,6 +57,13 @@ export class ChuckComponent implements OnInit {
     this.jokeService.jokes$
       .map(jokes => jokes.filter(joke => joke.favorite))
       .subscribe(this.favorites$);
+
+    this.favorites$
+      .subscribe(favs => this.storageService.storeFavorites(favs));
+
+    Observable
+      .from(this.storageService.getFavorites())
+      .subscribe(joke => this.jokeService.add(joke));
   }
 
   handleFavorite(joke: Joke) {

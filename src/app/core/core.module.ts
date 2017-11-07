@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Application wide singletons
 import { JokeService } from './services';
 import { ApiService } from './services';
+import { StorageService } from './services';
 
 // Eager loaded module
 import { ChuckModule } from '../chuck/chuck.module';
@@ -16,6 +17,7 @@ import { ChuckModule } from '../chuck/chuck.module';
   providers: [
     JokeService,
     ApiService,
+    StorageService,
   ],
 })
 export class CoreModule {
