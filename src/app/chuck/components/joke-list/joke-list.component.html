@@ -3,13 +3,13 @@
   <mat-card-title>Jokes</mat-card-title>
 
   <mat-card-content>
-    <mat-selection-list>
-      <mat-list-option
+    <mat-list>
+      <mat-list-item
         *ngFor="let joke of jokes"
         (click)="onFavorite(joke)">
         {{ joke.text }}
-      </mat-list-option>
-    </mat-selection-list>
+      </mat-list-item>
+    </mat-list>
   </mat-card-content>
 
   <mat-card-actions>
