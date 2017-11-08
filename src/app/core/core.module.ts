@@ -15,7 +15,7 @@ import { ChuckModule } from '../chuck/chuck.module';
     HttpClientModule,
   ],
   providers: [
-    JokeService,
+    { provide: JokeService, useValue: new JokeService(10) },
     ApiService,
     StorageService,
   ],

@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 
 // Libs
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/mergeMap';
 
 // Models
 import { Joke } from '../../shared/models';
@@ -21,7 +22,7 @@ export class JokeService {
   private _remove$ = new Subject<Joke>();
   private _toggle$ = new Subject<Joke>();
 
-  constructor() {
+  constructor(private favoriteLimit = Number.MAX_VALUE) {
 
     this._jokes$
       .subscribe(this.jokes$);
@@ -39,7 +40,7 @@ export class JokeService {
       .subscribe(this._update$);
 
     this._toggle$
-      .map(joke => this._toggleAction(joke))
+      .map(joke => joke.favorite ? this._unfavoriteAction(joke) : this._favoriteAction(joke))
       .subscribe(this._update$);
   }
 
@@ -73,12 +74,20 @@ export class JokeService {
     };
   }
 
-  private _toggleAction(joke: Joke): JokeAction {
+  private _favoriteAction(joke: Joke): JokeAction {
     return (state: Joke[]) => state.map(item => {
       if (item.id === joke.id) {
-        item.favorite = !item.favorite;
+        if (this.jokes$.getValue().filter(x => x.favorite).length < this.favoriteLimit) {
+          return { ...item, favorite: true };
+        }
       }
       return item;
+    });
+  }
+
+  private _unfavoriteAction(joke: Joke): JokeAction {
+    return(state: Joke[]) => state.map(item => {
+      return item.id === joke.id ? { ...item, favorite: false } : item;
     });
   }
 
