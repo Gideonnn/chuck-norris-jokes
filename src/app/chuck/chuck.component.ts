@@ -3,8 +3,11 @@ import { Component, OnInit } from '@angular/core';
 // Libs
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/take';
 
 // Models
 import { Joke } from '../shared/models';
@@ -22,7 +25,8 @@ import { StorageService } from '../core/services';
       <gid-joke-list
         [jokes]="jokes$ | async"
         (favorite)="handleFavorite($event)"
-        (refresh)="handleRefresh()">
+        (refresh)="handleRefresh()"
+        (timer)="handleTimer()">
       </gid-joke-list>
 
       <gid-favorite-list
@@ -38,6 +42,8 @@ export class ChuckComponent implements OnInit {
 
   favorites$ = new Subject<Joke[]>();
   jokes$ = new Subject<Joke[]>();
+
+  private autoFavoriteSub: Subscription;
 
   constructor(
     public apiService: ApiService,
@@ -79,5 +85,18 @@ export class ChuckComponent implements OnInit {
 
   handleRefresh() {
     this.apiService.refresh();
+  }
+
+  handleTimer() {
+    if (!this.autoFavoriteSub || this.autoFavoriteSub.closed) {
+      const jokes = this.jokeService.jokes$.getValue().filter(fav => !fav.favorite);
+      this.autoFavoriteSub = Observable
+        .timer(0, 1000)
+        .take(jokes.length)
+        .map(i => jokes[i])
+        .subscribe(joke => this.jokeService.toggleFavorite(joke));
+    } else {
+      this.autoFavoriteSub.unsubscribe();
+    }
   }
 }
